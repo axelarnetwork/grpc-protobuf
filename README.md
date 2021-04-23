@@ -1,2 +1,2 @@
-# grpc-protobuf
-Protobuf files used for gRPC calls between https://github.com/axelarnetwork/axelar-core and https://github.com/axelarnetwork/tofn
+# gRPC-protobuf
+Protobuf file used for gRPC calls between [axelar-core](https://github.com/axelarnetwork/axelar-core) and [tofnd](https://github.com/axelarnetwork/tofn).
