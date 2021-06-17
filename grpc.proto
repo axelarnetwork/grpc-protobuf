@@ -34,8 +34,13 @@ message MessageOut {
     }
 
     message KeygenResult {
+        message KeygenOutput {
+            bytes pub_key = 1;                       // pub_key (as before)
+            repeated bytes share_recovery_infos = 2; // additional info
+        }
+
         oneof keygen_result_data {
-            bytes pub_key = 1;
+            KeygenOutput data = 1;          // KeygenOutput instead of 'bytes pub_key'
             CriminalList criminals = 2;
         }
     }
