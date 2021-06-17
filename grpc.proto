@@ -27,10 +27,16 @@ message MessageIn {
 }
 
 message MessageOut {
+
+    message NeedRecover {
+        string session_id = 1;
+    }
+
     oneof data { // TODO don't reuse `data`
         TrafficOut traffic = 1;  // all but final message
         KeygenResult keygen_result = 2; // final message only, Keygen
         SignResult sign_result = 3;   // final message only, Sign
+        NeedRecover need_recover = 4;   // issue recover from axelar-core
     }
 
     message KeygenResult {
