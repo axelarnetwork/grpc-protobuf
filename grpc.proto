@@ -14,13 +14,14 @@ service GG20 {
 }
 
 message RecoverRequest {
-    KeygenInit keygen_init = 1;
+    KeygenInit keygen_init = 1 [ (gogoproto.nullable) = false ];
     repeated bytes share_recovery_infos = 2; 
 }
 message RecoverResponse { 
     enum Response {
-        success = 0;
-        fail = 1;
+        RESPONSE_UNSPECIFIED = 0;
+        RESPONSE_SUCCESS = 1;
+        RESPONSE_FAIL = 2;
     }
     Response response = 1; 
 }
