@@ -14,7 +14,7 @@ service GG20 {
 }
 
 message RecoverRequest {
-    KeygenInit keygen_init = 1 [ (gogoproto.nullable) = false ];
+    KeygenInit keygen_init = 1;
     repeated bytes share_recovery_infos = 2; 
 }
 message RecoverResponse { 
