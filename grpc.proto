@@ -8,9 +8,26 @@ package tofnd;
 // GG20 is the protocol https://eprint.iacr.org/2020/540
 // rpc definitions intended to wrap the API for this library: https://github.com/axelarnetwork/tofn
 service GG20 {
+    rpc Recover(RecoverRequest) returns (RecoverResponse);
     rpc Keygen(stream MessageIn) returns (stream MessageOut);
     rpc Sign(stream MessageIn) returns (stream MessageOut);
+    rpc KeyPresence(KeyPresenceRequest) returns (KeyPresenceResponse);
 }
+
+message RecoverRequest {
+    KeygenInit keygen_init = 1;
+    repeated bytes share_recovery_infos = 2; 
+}
+
+message RecoverResponse { 
+    enum Response {
+        RESPONSE_UNSPECIFIED = 0;
+        RESPONSE_SUCCESS = 1;
+        RESPONSE_FAIL = 2;
+    }
+    Response response = 1; 
+}
+
 
 // generic message types shared by Keygen, Sign
 
@@ -18,7 +35,7 @@ service GG20 {
 // eg. KeygenInit, SignInit should be defined inside MessageIn, etc.
 
 message MessageIn {
-    oneof data { // TODO don't reuse `data`
+    oneof data {                    // TODO don't reuse `data`
         KeygenInit keygen_init = 1; // first message only, Keygen
         SignInit sign_init = 2;     // first message only, Sign
         TrafficIn traffic = 3;      // all subsequent messages
@@ -27,26 +44,37 @@ message MessageIn {
 }
 
 message MessageOut {
-    oneof data { // TODO don't reuse `data`
-        TrafficOut traffic = 1;  // all but final message
+
+    oneof data {                        // TODO don't reuse `data`
+        TrafficOut traffic = 1;         // all but final message
         KeygenResult keygen_result = 2; // final message only, Keygen
-        SignResult sign_result = 3;   // final message only, Sign
+        SignResult sign_result = 3;     // final message only, Sign
+        bool need_recover = 4;   // issue recover from client
     }
 
+    // Keygen's response types
     message KeygenResult {
+        // Keygen's success response
+        message KeygenOutput {
+            bytes pub_key = 1;                       // pub_key 
+            repeated bytes share_recovery_infos = 2; // recovery nfo
+        }
+
         oneof keygen_result_data {
-            bytes pub_key = 1;
-            CriminalList criminals = 2;
+            KeygenOutput data = 1;       // Success response
+            CriminalList criminals = 2;  // Failure response
         }
     }
 
+    // Sign's response types
     message SignResult {
         oneof sign_result_data {
-            bytes signature = 1;
-            CriminalList criminals = 2;
+            bytes signature = 1;        // Success response
+            CriminalList criminals = 2; // Failure response
         }
     }
 
+    // Keygen/Sign failure response message
     message CriminalList {
         repeated Criminal criminals = 1;
 
@@ -92,4 +120,20 @@ message SignInit {
     string key_uid = 2;
     repeated string party_uids = 3; // TODO replace this with a subset of indices?
     bytes message_to_sign = 4;
+}
+
+// Key presence check types
+message KeyPresenceRequest {
+    string key_uid = 1;
+}
+
+message KeyPresenceResponse {
+    enum Response {
+        RESPONSE_UNSPECIFIED = 0;
+        RESPONSE_PRESENT = 1;
+        RESPONSE_ABSENT = 2;
+        RESPONSE_FAIL = 3;
+    }
+
+    Response response = 1;
 }
