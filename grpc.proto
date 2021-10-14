@@ -7,6 +7,7 @@ package tofnd;
 
 // GG20 is the protocol https://eprint.iacr.org/2020/540
 // rpc definitions intended to wrap the API for this library: https://github.com/axelarnetwork/tofn
+// TODO: rename to soething like "TofndService"
 service GG20 {
     rpc Recover(RecoverRequest) returns (RecoverResponse);
     rpc Keygen(stream MessageIn) returns (stream MessageOut);
@@ -106,11 +107,19 @@ message TrafficOut {
 // Keygen-specific message types
 
 message KeygenInit {
+
+    enum KeygenType {
+        UNDEFINED = 0;
+        GG20 = 1;
+        MULTISIG = 2;
+    }
+
     string new_key_uid = 1;
     repeated string party_uids = 2;
     repeated uint32 party_share_counts = 5;
     uint32 my_party_index = 3; // parties[my_party_index] belongs to the server
     uint32 threshold = 4;
+    KeygenType keygen_type = 6;
 }
 
 // Sign-specific message types
