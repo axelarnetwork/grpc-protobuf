@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option go_package = "tofnd;tofnd";
+
+package tofnd;
+
+service Multisig {
+    rpc Keygen(KeygenRequest) returns (KeygenResponse);
+    rpc Sign(SignRequest) returns (SignResponse);
+}
+
+message KeygenRequest {
+    string key_uid = 1;
+    string party_uid = 2;
+}
+
+message KeygenResponse { 
+    oneof keygen_response {
+        bytes pub_key = 1;
+        string error = 2; // reply with an error message if keygen fails
+    }
+}
+
+message SignRequest {
+    string key_uid = 1;
+    bytes msg_to_sign = 2;
+}
+
+message SignResponse { 
+    oneof sign_response {
+        bytes signature = 1;
+        string error = 2; // reply with an error message if sign fails
+    }
+}
