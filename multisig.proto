@@ -11,7 +11,7 @@ service Multisig {
 
 message KeygenRequest {
     string key_uid = 1;
-    string party_uid = 2;
+    string party_uid = 2; // used only for logging
 }
 
 message KeygenResponse { 
