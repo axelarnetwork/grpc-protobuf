@@ -11,10 +11,10 @@ message KeyPresenceRequest {
 
 message KeyPresenceResponse {
     enum Response {
-	RESPONSE_UNSPECIFIED = 0;
-	RESPONSE_PRESENT = 1;
-	RESPONSE_ABSENT = 2;
-	RESPONSE_FAIL = 3;
+        RESPONSE_UNSPECIFIED = 0;
+        RESPONSE_PRESENT = 1;
+        RESPONSE_ABSENT = 2;
+        RESPONSE_FAIL = 3;
     }
 
     Response response = 1;
