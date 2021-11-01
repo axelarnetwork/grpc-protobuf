@@ -5,6 +5,8 @@ option go_package = "tofnd;tofnd";
 
 package tofnd;
 
+import "common.proto"; // import key presence request/response
+
 // GG20 is the protocol https://eprint.iacr.org/2020/540
 // rpc definitions intended to wrap the API for this library: https://github.com/axelarnetwork/tofn
 service GG20 {
@@ -120,20 +122,4 @@ message SignInit {
     string key_uid = 2;
     repeated string party_uids = 3; // TODO replace this with a subset of indices?
     bytes message_to_sign = 4;
-}
-
-// Key presence check types
-message KeyPresenceRequest {
-    string key_uid = 1;
-}
-
-message KeyPresenceResponse {
-    enum Response {
-        RESPONSE_UNSPECIFIED = 0;
-        RESPONSE_PRESENT = 1;
-        RESPONSE_ABSENT = 2;
-        RESPONSE_FAIL = 3;
-    }
-
-    Response response = 1;
 }

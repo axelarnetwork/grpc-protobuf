@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option go_package = "tofnd;tofnd";
+
+package tofnd;
+
+// Key presence check types
+message KeyPresenceRequest {
+    string key_uid = 1;
+}
+
+message KeyPresenceResponse {
+    enum Response {
+        RESPONSE_UNSPECIFIED = 0;
+        RESPONSE_PRESENT = 1;
+        RESPONSE_ABSENT = 2;
+        RESPONSE_FAIL = 3;
+    }
+
+    Response response = 1;
+}
