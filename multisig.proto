@@ -7,7 +7,6 @@ package tofnd;
 import "common.proto"; // import key presence request/response
 
 service Multisig {
-    rpc KeyPresence(KeyPresenceRequest) returns (KeyPresenceResponse);
     rpc Keygen(KeygenRequest) returns (KeygenResponse);
     rpc Sign(SignRequest) returns (SignResponse);
 }
