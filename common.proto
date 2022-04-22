@@ -7,7 +7,7 @@ package tofnd;
 // Key presence check types
 message KeyPresenceRequest {
     string key_uid = 1;
-    optional bytes pub_key = 2; // SEC1-encoded compressed pub key bytes to find the right mnemonic. Latest is used, if not specified.
+    bytes pub_key = 2; // SEC1-encoded compressed pub key bytes to find the right mnemonic. Latest is used, if not specified.
 }
 
 message KeyPresenceResponse {
