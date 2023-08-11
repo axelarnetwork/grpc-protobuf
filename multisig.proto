@@ -12,11 +12,6 @@ service Multisig {
     rpc Sign(SignRequest) returns (SignResponse);
 }
 
-enum Algorithm {
-    ALGORITHM_ECDSA = 0;
-    ALGORITHM_ED25519 = 1;
-}
-
 message KeygenRequest {
     string key_uid = 1;
     string party_uid = 2; // used only for logging
